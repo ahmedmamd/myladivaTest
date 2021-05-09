@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "907144294768",
+    "project_id": "ladiva-429f9",
+    "storage_bucket": "ladiva-429f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907144294768:android:269ffbfb3b7dcf9f405fb5",
+        "android_client_info": {
+          "package_name": "com.upclicks.laDiva"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907144294768-qfe0cq16hvffj813l3ijfm609mgh90mf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA83LD19ZHIcdg3ZoHtpbKh1lcqDv6f-hI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "907144294768-qfe0cq16hvffj813l3ijfm609mgh90mf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
