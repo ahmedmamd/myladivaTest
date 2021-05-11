@@ -16,17 +16,7 @@ import retrofit2.http.POST;
 public interface ApiInterface {
 
     @POST("account/Authenticate")
-    public Call<Result<UserSession>> login(@Header("Accept") String accept ,
-                                           @Header("DeviceType") String deviceType ,
-                                           @Header("AppVersion") String appVersion ,
-                                           @Header("ConnectionType") String ConnectionType ,
-                                           @Header("OSVersion") String OSVersion ,
-                                           @Header("OSType") String OSType ,
-                                           @Header("FirebaseToken") String firebaseToken ,
-                                           @Header("LanguageCode") String LanguageCode ,
-                                           @Header("latitude") String latitude ,
-                                           @Header("longitude") String longitude ,
-                                           @Body LoginRequest body);
+    public Call<Result<UserSession>> login(@Body LoginRequest body);
 
     @POST("account/Signup")
     public Call<Result<SignUpRequest>> signUpRequest(@Body SignUpRequest signUpRequest);

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.signUp_Activity">
+    tools:context=".ui.SignUpActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,13 +28,15 @@
             android:layoutDirection="ltr"
             >
             <EditText
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/surname"
+                android:hint="name"
                 android:layout_margin="5dp"
                 android:drawableLeft="@drawable/surname"/>
 
             <EditText
+                android:id="@+id/surname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/last_name"
@@ -44,6 +46,7 @@
 
         </LinearLayout>
         <EditText
+            android:id="@+id/emailOrPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Email"
@@ -52,6 +55,7 @@
             />
 
         <EditText
+            android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/Password"
@@ -59,6 +63,7 @@
             android:layout_margin="8dp"
             />
         <Button
+            android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -77,6 +82,7 @@
                 android:text="@string/Already_have_acount"/>
 
             <Button
+                android:id="@+id/signin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
