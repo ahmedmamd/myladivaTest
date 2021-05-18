@@ -1,99 +1,119 @@
 package com.upclicks.laDiva.viewModel;
 
 import android.content.Context;
-import android.os.Build;
+
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.google.firebase.BuildConfig;
 import com.upclicks.laDiva.base.BaseViewModel;
 import com.upclicks.laDiva.data.ApiInterface;
 import com.upclicks.laDiva.data.ApiService;
+import com.upclicks.laDiva.data.CustomRxObserver;
 import com.upclicks.laDiva.pojo.request.LoginRequest;
 import com.upclicks.laDiva.pojo.request.Result;
 import com.upclicks.laDiva.pojo.request.SignUpRequest;
 import com.upclicks.laDiva.pojo.request.UserSession;
+import com.upclicks.laDiva.repository.AccountRepository;
 
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class AcountViewModel extends BaseViewModel {
-    SignUpRequest signUpRequest ;
+    SignUpRequest signUpRequest;
     LoginRequest loginRequest;
     ApiInterface apiInterface;
-    BaseViewModel baseViewModel;
+    AccountRepository accountRepository;
+    Context context;
 
+    public void setContext(Context context) {
+        this.context = context;
+        apiInterface = ApiService.getINSTANCE(context).create(ApiInterface.class);
+        accountRepository = new AccountRepository(apiInterface);
+    }
 
 
     MutableLiveData<Result<UserSession>> loginMutableLiveData = new MutableLiveData<>();
-    public LiveData<Result<UserSession>> loginLiveData (){
+
+    public LiveData<Result<UserSession>> loginLiveData() {
         return loginMutableLiveData;
     }
 
     MutableLiveData<Result<SignUpRequest>> signUpMutableLiveData = new MutableLiveData<>();
-    public LiveData<Result<SignUpRequest>> signUpLiveData (){
+
+    public LiveData<Result<SignUpRequest>> signUpLiveData() {
         return signUpMutableLiveData;
     }
 
-    public void login(Context context,String token , String email , String password) {
+    public void login(Context context, String token, String email, String password) {
+        loginRequest = new LoginRequest(email, password);
+        // loginRequest = new LoginRequest("201005886912","123456");
+        accountRepository.login(loginRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new CustomRxObserver() {
 
-           baseViewModel = new BaseViewModel();
+                    @Override
+                    public void onNext(@NonNull Object o) {
+                        loginMutableLiveData.setValue((Result<UserSession>) o);
+                        Log.d("onsuccess", "onNext: ");
+                    }
 
-       // loginRequest = new LoginRequest("201005886912","123456");
-        loginRequest = new LoginRequest(email,password);
-        apiInterface = ApiService.getINSTANCE(context).create(ApiInterface.class);
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        requesterror.setValue("error" + e.getMessage());
+                        Log.d("onerror", "onError: ");
+                    }
 
-        Call<Result<UserSession>> call = apiInterface.login(
-                loginRequest);
-        call.enqueue(new Callback<Result<UserSession>>() {
-            @Override
-            public void onResponse(Call<Result<UserSession>> call, Response<Result<UserSession>> response) {
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
 
 
+//         observable.subscribe(o -> loginMutableLiveData.setValue(o) , e-> requesterror.setValue("error"+e) );
 
-                Log.d("viewModel" , ""+response.code());
-                if (response.isSuccessful()){
-
-                    loginMutableLiveData.setValue(response.body());
-                    Log.e("viewModel" , response.body().toString()+"test success");
-                }else
-                    Log.e("viewModel" , "not Successful");
-
-            }
-
-            @Override
-            public void onFailure(Call<Result<UserSession>> call, Throwable t) {
-                requesterror.setValue("error  "+t.getMessage());
-                Log.e("viewModel" , t.getMessage());
-            }
-        });
     }
-    public void signUp(Context context , String password , String name , String surname , String phoneNumber) {
 
-        signUpRequest =new SignUpRequest(password , name , surname , phoneNumber );
+    public void signUp(Context context, String password, String name, String surname, String phoneNumber) {
 
-        apiInterface = ApiService.getINSTANCE(context).create(ApiInterface.class);
+        signUpRequest = new SignUpRequest(password, name, surname, phoneNumber);
 
-        Call<Result<SignUpRequest>> call = apiInterface.signUpRequest(signUpRequest);
-        call.enqueue(new Callback<Result<SignUpRequest>>() {
-            @Override
-            public void onResponse(Call<Result<SignUpRequest>> call, Response<Result<SignUpRequest>> response) {
-                if (response.isSuccessful()){
-                    signUpMutableLiveData.setValue(response.body());
-                }else
-                    Log.e("viewModel" , "not Successful");
-            }
+        accountRepository.signUp(signUpRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
 
-            @Override
-            public void onFailure(Call<Result<SignUpRequest>> call, Throwable t) {
-                   baseViewModel.requesterror.setValue(t.getMessage());
-            }
-        });
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new CustomRxObserver() {
+                    @Override
+                    public void onNext(@NonNull Object o) {
+                        signUpMutableLiveData.setValue((Result<SignUpRequest>) o);
+                        Log.d("onsuccess", "onNext: ");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        requesterror.setValue("en error" + e.getMessage());
+                        Log.d("onerror", "onError");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+
     }
-    }
+}
 

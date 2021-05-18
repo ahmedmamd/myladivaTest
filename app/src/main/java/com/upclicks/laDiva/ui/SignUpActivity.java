@@ -24,6 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_);
         acountViewModel = new ViewModelProvider(this).get(AcountViewModel.class);
+        acountViewModel.setContext(this);
         name = findViewById(R.id.name);
         surname = findViewById(R.id.surname);
         password = findViewById(R.id.password);

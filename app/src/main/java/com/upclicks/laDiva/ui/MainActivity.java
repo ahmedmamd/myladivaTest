@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
 
         acountViewModel = new ViewModelProvider(this).get(AcountViewModel.class);
-          email = findViewById(R.id.userEmail);
+        acountViewModel.setContext(this);
+
+        email = findViewById(R.id.userEmail);
           password =findViewById(R.id.userPassword);
 
 
