@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity  {
           password =findViewById(R.id.userPassword);
 
 
-
             findViewById(R.id.loginBtton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
