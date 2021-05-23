@@ -52,7 +52,7 @@ public  class  AcountViewModel extends BaseViewModel {
     public void setContext(Context context) {
         this.context = context;
         apiInterface = ApiService.getINSTANCE(context);
-//                .create(ApiInterface.class);
+
         Log.d("apiinterface" ,"setContext: "+apiInterface.toString());
         accountRepository = new AccountRepository(apiInterface);
     }
