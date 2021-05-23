@@ -3,7 +3,6 @@ package com.upclicks.laDiva.data;
 
 import android.content.Context;
 
-import com.upclicks.laDiva.component.ApiComponent;
 
 import javax.inject.Singleton;
 
