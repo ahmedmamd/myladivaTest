@@ -4,6 +4,7 @@ import android.content.Context;
 
 import android.util.Log;
 
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -18,6 +19,11 @@ import com.upclicks.laDiva.pojo.request.UserSession;
 import com.upclicks.laDiva.repository.AccountRepository;
 
 
+import javax.inject.Inject;
+
+import dagger.Provides;
+import dagger.hilt.android.AndroidEntryPoint;
+import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
 
@@ -25,17 +31,29 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-
-public class AcountViewModel extends BaseViewModel {
+//@HiltViewModel
+public  class  AcountViewModel extends BaseViewModel {
     SignUpRequest signUpRequest;
     LoginRequest loginRequest;
     ApiInterface apiInterface;
     AccountRepository accountRepository;
     Context context;
 
+@Inject
+    public AcountViewModel() {
+    }
+
+     @ViewModelInject
+     public AcountViewModel(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+
     public void setContext(Context context) {
         this.context = context;
-        apiInterface = ApiService.getINSTANCE(context).create(ApiInterface.class);
+        apiInterface = ApiService.getINSTANCE(context);
+//                .create(ApiInterface.class);
+        Log.d("apiinterface" ,"setContext: "+apiInterface.toString());
         accountRepository = new AccountRepository(apiInterface);
     }
 

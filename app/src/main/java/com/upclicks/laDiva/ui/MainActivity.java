@@ -15,13 +15,20 @@ import android.widget.EditText;
 import com.upclicks.laDiva.R;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.upclicks.laDiva.base.MyApplication;
 import com.upclicks.laDiva.pojo.request.Result;
 import com.upclicks.laDiva.pojo.request.UserSession;
 import com.upclicks.laDiva.viewModel.AcountViewModel;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@SuppressWarnings("unchecked")
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity  {
 
-
+@Inject
     AcountViewModel acountViewModel;
 
     String  TAG = "MainActivity";
@@ -31,13 +38,14 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        ((MyApplication) getApplicationContext()).getComponent().inject(this);
         setContentView(R.layout.activity_main);
 
         acountViewModel = new ViewModelProvider(this).get(AcountViewModel.class);
         acountViewModel.setContext(this);
 
-        email = findViewById(R.id.userEmail);
-          password =findViewById(R.id.userPassword);
+           email = findViewById(R.id.userEmail);
+           password =findViewById(R.id.userPassword);
 
 
             findViewById(R.id.loginBtton).setOnClickListener(new View.OnClickListener() {

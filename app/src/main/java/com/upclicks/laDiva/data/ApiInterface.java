@@ -8,6 +8,10 @@ import com.upclicks.laDiva.pojo.request.Result;
 import com.upclicks.laDiva.pojo.request.SignUpRequest;
 import com.upclicks.laDiva.pojo.request.UserSession;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+import dagger.Provides;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
 import retrofit2.http.Body;

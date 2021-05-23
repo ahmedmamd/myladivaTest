@@ -6,12 +6,20 @@ import com.upclicks.laDiva.pojo.request.Result;
 import com.upclicks.laDiva.pojo.request.SignUpRequest;
 import com.upclicks.laDiva.pojo.request.UserSession;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import io.reactivex.rxjava3.core.Observable;
 
-public class AccountRepository  {
-    private ApiInterface apiInterface ;
 
-    public AccountRepository(ApiInterface apiInterface) {
+public class AccountRepository  {
+
+    ApiInterface apiInterface ;
+
+
+
+   @Inject
+   public AccountRepository(ApiInterface apiInterface) {
         this.apiInterface = apiInterface;
     }
 
